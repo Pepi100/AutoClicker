@@ -1,6 +1,9 @@
+import clickbot.ClickBot;
+
 import java.awt.*;
 import javax.swing.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
 
@@ -11,24 +14,11 @@ public class Main {
     public static void main(String[] args) {
         mainFrameInit();
 
-        Point p = MouseInfo.getPointerInfo().getLocation();
-        try {
-            Robot r = new Robot();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-
-//        JButton b=new JButton("click");//creating instance of JButton
-//        b.setBounds(130,100,100, 40);//x axis, y axis, width, height
-//
-//        f.add(b);//adding button in JFrame
-
 
     }
 
 
-    private static void mainFrameInit(){
+    public static void mainFrameInit(){
 //        mainFrame.setUndecorated(true);
 //        mainFrame.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
 //        TODO TitleBar
@@ -39,8 +29,9 @@ public class Main {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.setBackground(bgColor);
-        
+
         JButton startButton = new JButton("START");
+        startButton.addActionListener(start);
         mainPanel.add(startButton);
 
 
@@ -55,4 +46,18 @@ public class Main {
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);//making the frame visible
     }
+
+
+    static final ActionListener start = new ActionListener()
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            ClickBot clickBot = new ClickBot();
+
+            System.out.println("Test");
+            clickBot.run();
+
+        }
+    };
 }
