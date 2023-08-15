@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 public class Main {
 
     static Color bgColor = new Color(43, 45, 48);
-
+    private static boolean state = false;
     static JFrame mainFrame=new JFrame();//creating instance of JFrame
-
+    static ClickBot c;
     public static void main(String[] args) {
         mainFrameInit();
 
@@ -53,11 +53,28 @@ public class Main {
         @Override
         public void actionPerformed(ActionEvent e)
         {
-            ClickBot clickBot = new ClickBot();
 
-            System.out.println("Test");
-            clickBot.run();
+
+            if (state){
+                state=false;
+                try{
+                    c.interrupt();
+                }catch (Exception interruptedException){
+
+                }
+
+
+            }else{
+                state = true;
+                c= new ClickBot();
+                c.start();
+            }
 
         }
     };
+
+
+    private static void run(){
+
+    }
 }
