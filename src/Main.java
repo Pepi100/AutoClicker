@@ -21,6 +21,8 @@ public class Main extends JFrame{
     private JFormattedTextField minutes;
     private JFormattedTextField seconds;
     private JFormattedTextField miliseconds;
+    private JButton exitButton;
+    private JButton minimizeButton;
 
 
     private static boolean state = false;
@@ -37,6 +39,8 @@ public class Main extends JFrame{
 
 //        TODO TitleBar
 
+        setAlwaysOnTop(true); //window doesn`t minimize when clicking outside of it
+        setUndecorated(true); //removes default window decorations
 
         setTitle("AutoClicker");
         setSize(400,400);//400 width and 400 height
@@ -47,9 +51,11 @@ public class Main extends JFrame{
 
         startButton.setVisible(true);
         startButton.addActionListener(start);
+        exitButton.addActionListener(exitAction);
+        minimizeButton.addActionListener(minimizeAction);
 
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); not needed anymore
         setLocationRelativeTo(null);
         setVisible(true);//making the frame visible
 
@@ -81,19 +87,39 @@ public class Main extends JFrame{
                 d=d.plusMillis(Integer.parseInt(miliseconds.getText()));
 
                 System.out.println(d);
-//                startButton.setEnabled(false);
+                startButton.setEnabled(false);
                 c= new ClickBot(d, ClickType.LEFT);
 
                 c.start();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
 
-
-//                startButton.setEnabled(true);
+                startButton.setEnabled(true);
                 startButton.setText("STOP");
             }
 
         }
     };
 
+    private final Action exitAction = new AbstractAction("Exit")
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            System.exit(0);
+        }
+    };
+    private final Action minimizeAction = new AbstractAction("Minimize")
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            setState(JFrame.ICONIFIED);
+        }
+    };
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
